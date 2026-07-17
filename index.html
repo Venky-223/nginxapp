@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Blinkit · Zepto style</title>
+    <!-- Font Awesome for clean icons (free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background: #f8f9fc;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 16px 12px 40px;
+        }
+
+        /* main card – like a mobile app container */
+        .app-container {
+            max-width: 430px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 32px 32px 28px 28px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06), 0 4px 12px rgba(0, 0, 0, 0.02);
+            overflow: hidden;
+            padding: 20px 18px 30px;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(0, 0, 0, 0.02);
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .brand-icon {
+            background: #0c831f;
+            width: 40px;
+            height: 40px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 22px;
+            box-shadow: 0 6px 12px rgba(12, 131, 31, 0.25);
+        }
+
+        .brand-text {
+            font-weight: 700;
+            font-size: 22px;
+            letter-spacing: -0.4px;
+            color: #1e1e2a;
+        }
+
+        .brand-text span {
+            color: #0c831f;
+            font-weight: 800;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 14px;
+            color: #2d2d3f;
+        }
+
+        .header-actions i {
+            font-size: 22px;
+            opacity: 0.8;
+            transition: 0.15s;
+            cursor: default;
+        }
+
+        .header-actions i:hover { opacity: 1; }
+
+        /* ===== DELIVERY BAR ===== */
+        .delivery-bar {
+            background: #f2f5fa;
+            border-radius: 60px;
+            padding: 10px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 8px 4px;
+        }
+
+        .delivery-loc {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            font-size: 15px;
+            color: #1a1a2c;
+        }
+
+        .delivery-loc i {
+            color: #0c831f;
+            font-size: 18px;
+        }
+
+        .delivery-loc small {
+            font-weight: 400;
+            color: #6b6b7a;
+            font-size: 14px;
+            margin-left: 4px;
+        }
+
+        .delivery-time {
+            background: white;
+            border-radius: 40px;
+            padding: 6px 16px 6px 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #0c2b1a;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+
+        .delivery-time i {
+            color: #0c831f;
+            font-size: 16px;
+        }
+
+        /* ===== SEARCH ===== */
+        .search-wrapper {
+            background: #f2f5fa;
+            border-radius: 40px;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+            transition: 0.15s;
+            border: 1px solid transparent;
+        }
+
+        .search-wrapper:focus-within {
+            background: white;
+            border-color: #0c831f;
+            box-shadow: 0 0 0 4px rgba(12, 131, 31, 0.08);
+        }
+
+        .search-wrapper i {
+            color: #6e6e82;
+            font-size: 18px;
+        }
+
+        .search-wrapper input {
+            background: transparent;
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 16px;
+            padding: 4px 0;
+            font-weight: 400;
+            color: #12121e;
+        }
+
+        .search-wrapper input::placeholder {
+            color: #9a9aae;
+            font-weight: 400;
+        }
+
+        /* ===== CATEGORY PILLS ===== */
+        .category-scroll {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding: 6px 0 20px;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .category-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .cat-pill {
+            background: #f2f5fa;
+            padding: 10px 22px;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 15px;
+            white-space: nowrap;
+            color: #1f1f30;
+            transition: 0.15s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.01);
+            border: 1px solid transparent;
+        }
+
+        .cat-pill i {
+            font-size: 16px;
+            color: #0c831f;
+        }
+
+        .cat-pill.active {
+            background: #0c831f;
+            color: white;
+            border-color: #0c831f;
+            box-shadow: 0 6px 14px rgba(12, 131, 31, 0.25);
+        }
+
+        .cat-pill.active i {
+            color: white;
+        }
+
+        .cat-pill:not(.active):hover {
+            background: #eaeef5;
+            cursor: default;
+        }
+
+        /* ===== BANNER / OFFER ===== */
+        .offer-banner {
+            background: linear-gradient(145deg, #0a1f0f, #123d1e);
+            border-radius: 28px;
+            padding: 18px 22px;
+            margin-bottom: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: white;
+            box-shadow: 0 10px 24px rgba(12, 131, 31, 0.15);
+        }
+
+        .offer-text {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .offer-text .tag {
+            font-weight: 600;
+            font-size: 15px;
+            letter-spacing: 0.3px;
+            opacity: 0.8;
+        }
+
+        .offer-text .main {
+            font-weight: 700;
+            font-size: 20px;
+            letter-spacing: -0.3px;
+        }
+
+        .offer-banner i {
+            font-size: 38px;
+            opacity: 0.7;
+            color: #e6ffd0;
+        }
+
+        /* ===== PRODUCT GRID ===== */
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 18px;
+            margin-top: 8px;
+        }
+
+        .section-title h3 {
+            font-weight: 700;
+            font-size: 20px;
+            color: #181824;
+            letter-spacing: -0.2px;
+        }
+
+        .section-title a {
+            font-size: 14px;
+            font-weight: 500;
+            color: #0c831f;
+            text-decoration: none;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .product-card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 14px 12px 16px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.02);
+            border: 1px solid #f0f3f8;
+            transition: 0.15s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            border-color: #d9e2ef;
+            box-shadow: 0 10px 22px rgba(0, 0, 0, 0.02);
+        }
+
+        .product-img {
+            background: #f4f7fc;
+            border-radius: 20px;
+            aspect-ratio: 1 / 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+            font-size: 36px;
+            color: #2b4b2f;
+        }
+
+        .product-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .product-name {
+            font-weight: 600;
+            font-size: 16px;
+            color: #161622;
+            letter-spacing: -0.2px;
+        }
+
+        .product-weight {
+            font-size: 13px;
+            color: #6f6f84;
+        }
+
+        .product-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 12px;
+        }
+
+        .product-price {
+            font-weight: 700;
+            font-size: 18px;
+            color: #0b1b0e;
+        }
+
+        .product-price small {
+            font-weight: 400;
+            font-size: 13px;
+            color: #6b6b7a;
+            margin-left: 4px;
+            text-decoration: line-through;
+        }
+
+        .add-btn {
+            background: #0c831f;
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-size: 14px;
+            letter-spacing: 0.2px;
+            box-shadow: 0 4px 12px rgba(12, 131, 31, 0.25);
+            transition: 0.1s ease;
+            cursor: default;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .add-btn i {
+            font-size: 14px;
+        }
+
+        .add-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* ===== BOTTOM NAV (static) ===== */
+        .bottom-nav {
+            margin-top: 38px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 12px 0 4px;
+            border-top: 1px solid #eef2f7;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: #8b8b9e;
+            font-size: 12px;
+            font-weight: 500;
+            transition: 0.1s;
+            cursor: default;
+        }
+
+        .nav-item i {
+            font-size: 24px;
+        }
+
+        .nav-item.active {
+            color: #0c831f;
+        }
+
+        .nav-item.active i {
+            font-weight: 700;
+        }
+
+        /* small tweaks for mobile */
+        @media (max-width: 400px) {
+            .app-container { padding: 16px 12px 20px; }
+            .delivery-bar { flex-direction: column; align-items: flex-start; }
+            .delivery-time { align-self: flex-start; }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+
+        <!-- HEADER -->
+        <div class="header">
+            <div class="brand">
+                <div class="brand-icon"><i class="fas fa-bolt"></i></div>
+                <div class="brand-text"><span>blink</span>it</div>
+            </div>
+            <div class="header-actions">
+                <i class="far fa-heart"></i>
+                <i class="far fa-user-circle"></i>
+            </div>
+        </div>
+
+        <!-- DELIVERY BAR -->
+        <div class="delivery-bar">
+            <div class="delivery-loc">
+                <i class="fas fa-map-pin"></i>
+                <span>Deliver to <strong>Mumbai 400001</strong> <small>• 2 km</small></span>
+            </div>
+            <div class="delivery-time">
+                <i class="fas fa-clock"></i>
+                <span>18 min</span>
+            </div>
+        </div>
+
+        <!-- SEARCH -->
+        <div class="search-wrapper">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search for groceries, snacks..." value="milk">
+        </div>
+
+        <!-- CATEGORY PILLS -->
+        <div class="category-scroll">
+            <div class="cat-pill active"><i class="fas fa-fire"></i> Essentials</div>
+            <div class="cat-pill"><i class="fas fa-leaf"></i> Fruits</div>
+            <div class="cat-pill"><i class="fas fa-carrot"></i> Veggies</div>
+            <div class="cat-pill"><i class="fas fa-bread-slice"></i> Bakery</div>
+            <div class="cat-pill"><i class="fas fa-wine-bottle"></i> Drinks</div>
+            <div class="cat-pill"><i class="fas fa-candy-cane"></i> Snacks</div>
+        </div>
+
+        <!-- OFFER BANNER -->
+        <div class="offer-banner">
+            <div class="offer-text">
+                <span class="tag">⚡ FLASH SALE</span>
+                <span class="main">Up to 40% off</span>
+                <span style="font-size: 14px; opacity: 0.8;">on dairy & bread</span>
+            </div>
+            <i class="fas fa-bolt"></i>
+        </div>
+
+        <!-- PRODUCT SECTION -->
+        <div class="section-title">
+            <h3>Trending now</h3>
+            <a href="#">View all <i class="fas fa-arrow-right" style="font-size: 12px;"></i></a>
+        </div>
+
+        <div class="product-grid">
+            <!-- card 1 -->
+            <div class="product-card">
+                <div class="product-img"><i class="fas fa-tint"></i></div>
+                <div class="product-info">
+                    <span class="product-name">Fresh Milk</span>
+                    <span class="product-weight">1L, Full cream</span>
+                </div>
+                <div class="product-bottom">
+                    <span class="product-price">₹56 <small>₹72</small></span>
+                    <div class="add-btn"><i class="fas fa-plus"></i> Add</div>
+                </div>
+            </div>
+            <!-- card 2 -->
+            <div class="product-card">
+                <div class="product-img"><i class="fas fa-egg"></i></div>
+                <div class="product-info">
+                    <span class="product-name">Free Range Eggs</span>
+                    <span class="product-weight">6 pcs, organic</span>
+                </div>
+                <div class="product-bottom">
+                    <span class="product-price">₹89 <small>₹105</small></span>
+                    <div class="add-btn"><i class="fas fa-plus"></i> Add</div>
+                </div>
+            </div>
+            <!-- card 3 -->
+            <div class="product-card">
+                <div class="product-img"><i class="fas fa-apple-alt"></i></div>
+                <div class="product-info">
+                    <span class="product-name">Apple</span>
+                    <span class="product-weight">4 pcs, Himalayan</span>
+                </div>
+                <div class="product-bottom">
+                    <span class="product-price">₹120 <small>₹155</small></span>
+                    <div class="add-btn"><i class="fas fa-plus"></i> Add</div>
+                </div>
+            </div>
+            <!-- card 4 -->
+            <div class="product-card">
+                <div class="product-img"><i class="fas fa-bread-loaf"></i></div>
+                <div class="product-info">
+                    <span class="product-name">Multigrain Bread</span>
+                    <span class="product-weight">400g, fresh</span>
+                </div>
+                <div class="product-bottom">
+                    <span class="product-price">₹45 <small>₹65</small></span>
+                    <div class="add-btn"><i class="fas fa-plus"></i> Add</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- extra row: show another category hint -->
+        <div style="margin: 24px 0 8px;">
+            <div class="section-title" style="margin-bottom: 12px;">
+                <h3>Quick picks</h3>
+                <a href="#">see all</a>
+            </div>
+            <div style="display: flex; gap: 14px; flex-wrap: wrap; background: #f9fbfe; border-radius: 40px; padding: 14px 18px;">
+                <span style="display: flex; align-items: center; gap: 8px; font-weight: 500;"><i class="fas fa-cheese" style="color: #0c831f;"></i> Cheese</span>
+                <span style="display: flex; align-items: center; gap: 8px; font-weight: 500;"><i class="fas fa-wine-bottle" style="color: #0c831f;"></i> Cold drinks</span>
+                <span style="display: flex; align-items: center; gap: 8px; font-weight: 500;"><i class="fas fa-cookie" style="color: #0c831f;"></i> Biscuits</span>
+            </div>
+        </div>
+
+        <!-- BOTTOM NAV (replica) -->
+        <div class="bottom-nav">
+            <div class="nav-item active"><i class="fas fa-home"></i><span>Home</span></div>
+            <div class="nav-item"><i class="fas fa-compass"></i><span>Explore</span></div>
+            <div class="nav-item"><i class="fas fa-shopping-bag"></i><span>Cart</span></div>
+            <div class="nav-item"><i class="fas fa-user"></i><span>Profile</span></div>
+        </div>
+
+        <!-- subtle footer note -->
+        <div style="text-align: center; margin-top: 24px; font-size: 12px; color: #b0b0c0; letter-spacing: 0.4px;">
+            ⚡ 10 min delivery • Free shipping
+        </div>
+    </div>
+</body>
+</html>
