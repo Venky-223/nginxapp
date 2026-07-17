@@ -1,2 +1,3 @@
-FROM alpine:3.23.5
+FROM nginx:latest
 Copy index.html /usr/share/nginx/html
+
